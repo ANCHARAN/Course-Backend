@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Video</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0 auto;
+      max-width: 600px;
+      padding: 20px;
+    }
+    .container {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .upload-btn {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .copy-btn {
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .video-id-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload Your Video</h1>
+    <input type="file" id="videoInput" accept="video/*">
+    <br>
+    <button id="upload-button" class="upload-btn" onclick="uploadVideo()">Upload Video</button>
+    <div id="videoIdContainer" class="video-id-container" style="display: none;">
+      <h3>Video URL: <span id="videoId"></span></h3>
+      <button class="copy-btn" onclick="copyVideoId()">Copy Video URL</button>
+    </div>
+  </div>
+<!-- In your index.ejs file -->
+<!-- <div id="loading-animation" style="display: none;">
+  <img src="loading.gif" alt="Loading...">
+</div> -->
+
+<button id="viewButton" class="view-btn" style="display: none;" onclick="viewAllVideos()">View All Videos</button>
+  </div>
+  
+  <script>
+    async function uploadVideo() {
+      const videoInput = document.getElementById('videoInput').files[0];
+
+      if (!videoInput) {
+        alert('Please select a video to upload!');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('video', videoInput);
+
+      try {
+        // Show the loading animation
+    // document.getElementById("loading-animation").style.display = "block";
+    document.getElementById("upload-button").disabled = true;
+
+        const response = await fetch('/upload', {
+          method: 'POST',
+          body: formData
+        });
+
+      console.log(response)
+
+        if (!response.ok) {
+          throw new Error('Failed to upload video');
+        }
+
+        const data = await response.json();
+        displayVideoId(data.gcsUrl);  // Assuming server returns video ID in JSON
+      } catch (error) {
+        alert('Error uploading video: ' + error.message);
+      }
+    }
+
+    function displayVideoId(videoId) {
+    const videoIdContainer = document.getElementById('videoIdContainer');
+    const videoIdSpan = document.getElementById('videoId');
+    videoIdSpan.textContent = videoId;
+    videoIdContainer.style.display = 'block';
+
+    // Show the View Video button
+    const viewButton = document.querySelector('.view-btn');
+    viewButton.style.display = 'block';
+    viewButton.onclick = () => window.location.href = `/view-video`; // Update URL
+}
+
+    function copyVideoId() {
+      const videoId = document.getElementById('videoId').textContent;
+      navigator.clipboard.writeText(videoId)
+        .then(() => alert('Video ID copied to clipboard!'))
+        .catch(err => alert('Failed to copy: ' + err));
+    }
+
+    // Function to trigger viewing all uploaded videos
+function viewAllVideos() {
+  window.location.href = '/view-videos'; // Redirects to the view-videos route to display all videos
+}
+
+  </script>
+</body>
+</html>

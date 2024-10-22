@@ -1,0 +1,6 @@
+node_modules
+# Keep environment variables out of version control
+.env
+turnkey-mender-436305-s2-78ea7a38baa5.json
+server.mp4
+uploads

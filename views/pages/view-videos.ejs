@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Uploaded Videos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0 auto;
+      max-width: 800px;
+      padding: 20px;
+    }
+    .video-item {
+      margin-bottom: 30px;
+    }
+    video {
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>All Uploaded Videos</h1>
+
+  <div class="video-container">
+    <% videos.forEach(function(video) { %>
+      <div class="video-item">
+        <h3><%= video.title || 'Untitled Video' %></h3>
+        <video controls>
+          <source src="<%= video.gcsUrl %>" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    <% }); %>
+  </div>
+</body>
+</html>
