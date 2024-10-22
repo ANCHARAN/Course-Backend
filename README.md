@@ -143,11 +143,4 @@ Certainly! Below is the Markdown code for each step mentioned in the guide. You 
 ## Conclusion
 
 You have successfully set up a MongoDB instance, configured Prisma, created a Google Cloud Storage bucket, and defined routes for your project. This guide should help you manage your database and storage effectively. If you have any questions or need further assistance, feel free to reach out!
-```
 
-### Saving the Markdown File
-
-1. Copy the content above into a text editor.
-2. Save the file with the name `PROJECT_GUIDE.md`.
-
-This detailed Markdown structure allows you to document each step of your project setup clearly and systematically. Let me know if you need any further assistance!
