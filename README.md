@@ -1,5 +1,3 @@
-Certainly! Below is the Markdown code for each step mentioned in the guide. You can copy each section into your `.md` file as needed.
-
 # Project Setup Guide
 
 ## Table of Contents
