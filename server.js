@@ -11,7 +11,28 @@ const cors=require('cors');
 const bodyParser=require('body-parser')
 app.use(cors())
 app.set('view engine', 'ejs');
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+//db update
+const mongoose = require('mongoose');
+const uri = "mongodb+srv://Auroravisionaries:<db_password>@cluster0.4pauh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
+
+async function run() {
+  try {
+    // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
+    await mongoose.connect(uri, clientOptions);
+    await mongoose.connection.db.admin().command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await mongoose.disconnect();
+  }
+}
+run().catch(console.dir);
+// db update end
+
 
 const helmet = require('helmet'); // Helmet helps secure your Express apps
 
